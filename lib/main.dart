@@ -6,6 +6,7 @@ void main() {
   runApp(MyApp());
 }
 
+// ignore: use_key_in_widget_constructors
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,14 +15,7 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(
             // backgroundColor: Colors.transparent,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.white, Color.fromARGB(136, 6, 4, 2)],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.bottomRight
-                  ),
-              ),
+            flexibleSpace: Container(              //проверка коммита
               alignment: Alignment.bottomLeft,
               width: 100.0,
               height: 100.0,
@@ -38,7 +32,7 @@ class MyApp extends StatelessWidget {
           body: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('lib/img/background.jpg'),
+                    image: AssetImage('lib/img/background.png'),
                     fit: BoxFit.cover)),
           ),
         ));
