@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(
             // backgroundColor: Colors.transparent,
             flexibleSpace: Container(
-              //проверка коммита
+              //вторая проверка коммита
               alignment: Alignment.bottomLeft,
               width: 100.0,
               height: 100.0,
@@ -36,8 +36,6 @@ class MyApp extends StatelessWidget {
                       image: AssetImage('lib/img/background.png'),
                       fit: BoxFit.cover)),
             ), 
-            
-            
         )
     );
   }
