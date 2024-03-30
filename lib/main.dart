@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(
             // backgroundColor: Colors.transparent,
-            flexibleSpace: Container(              //проверка коммита
+            flexibleSpace: Container(
+              //проверка коммита
               alignment: Alignment.bottomLeft,
               width: 100.0,
               height: 100.0,
@@ -29,12 +30,15 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-          body: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('lib/img/background.png'),
-                    fit: BoxFit.cover)),
-          ),
-        ));
+            body: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('lib/img/background.png'),
+                      fit: BoxFit.cover)),
+            ), 
+            
+            
+        )
+    );
   }
 }
