@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           // backgroundColor: Colors.transparent,
           flexibleSpace: Container(
-            //проверка коммита
             alignment: Alignment.bottomLeft,
             width: 100.0,
             height: 100.0,
@@ -47,23 +46,30 @@ class MyApp extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("загрузить", style: TextStyle(
+                  Text("Загрузить", style: TextStyle(
                       fontSize: 68.0,
                       fontWeight: FontWeight.bold,
-                      color: Color(0x72000000)
+                      // color: Color(0x72000000),
+                      color: Color.fromRGBO(0, 0, 0, 0.75),
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.italic
                   ),),
                   Text("фото", style: TextStyle(fontSize: 40.0,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xff000000)
+                      // fontStyle: FontStyle.italic,
+                      color: Color(0xff000000),
+                      fontFamily: "Montserrat",
                   ),),
                   ElevatedButton(onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.brown.shade300,
+                        // backgroundColor: Colors.brown.shade300,
+                        backgroundColor: Color.fromRGBO(143, 124, 112, 1),
                         shadowColor: Color(0xff000000),
                       ),
                     child: const Text("Поиск предметов", style: TextStyle(
                         fontSize: 32.0,
-                        color: Color(0xffffffff)
+                        color: Color(0xffffffff),
+                        fontFamily: "Montserrat",
                     ),
                   )
                   )
