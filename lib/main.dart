@@ -6,10 +6,11 @@ void main() {
   runApp(MyApp());
 }
 
-// ignore: use_key_in_widget_constructors
+// ignore: use_key_in_widget_constructors, must_be_immutable
 class MyApp extends StatelessWidget {
   List<String> items = ['One', 'Two', 'Three', 'Four'];
   String? selectedItem = 'One';
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,72 +29,117 @@ class MyApp extends StatelessWidget {
               height: 50.0,
               decoration: BoxDecoration(
                   image:
-                  DecorationImage(image: AssetImage('lib/img/logo.png'))),
+                      DecorationImage(image: AssetImage('lib/img/logo.png'))),
             ),
           ),
         ),
-        body:
-        Container(
+        body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('lib/img/background.png'),
                   fit: BoxFit.cover)),
           padding: EdgeInsets.only(top: 100.0),
-          margin: const EdgeInsets.symmetric(horizontal: 20.0,),
+          margin: const EdgeInsets.symmetric(
+            horizontal: 20.0,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Загрузить", style: TextStyle(
-                      fontSize: 68.0,
-                      fontWeight: FontWeight.bold,
-                      // color: Color(0x72000000),
-                      color: Color.fromRGBO(0, 0, 0, 0.75),
-                      fontFamily: "Montserrat",
-                      fontStyle: FontStyle.italic
-                  ),),
-                  Text("фото", style: TextStyle(fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                      // fontStyle: FontStyle.italic,
-                      color: Color(0xff000000),
-                      fontFamily: "Montserrat",
-                  ),),
-                  ElevatedButton(onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        // backgroundColor: Colors.brown.shade300,
-                        backgroundColor: Color.fromRGBO(143, 124, 112, 1),
-                        shadowColor: Color(0xff000000),
+                  Text(
+                    "Загрузить",
+                    style: TextStyle(
+                        fontSize: 68.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(0, 0, 0, 0.75),
+                        fontFamily: "Montserrat",
+                        fontStyle: FontStyle.italic),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "фото",
+                        style: TextStyle(
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff000000),
+                          fontFamily: "Montserrat",
+                        ),
                       ),
-                    child: const Text("Поиск предметов", style: TextStyle(
+                      SizedBox(width: 5),
+                      Image.asset(
+                        "lib/img/download_icon.png",
+                        width: 50,
+                        height: 50,
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(143, 124, 112, 1),
+                      shadowColor: Color(0xff000000),
+                    ),
+                    child: Text(
+                      "Поиск предметов",
+                      style: TextStyle(
                         fontSize: 32.0,
                         color: Color(0xffffffff),
                         fontFamily: "Montserrat",
+                      ),
                     ),
-                  )
                   )
                 ],
               ),
               Column(
                 children: [
-                  DropdownButton(items: items.map((item) =>
-                      DropdownMenuItem(child: Text(item), value: item)).toList(),
-                    value: selectedItem,
-                    onChanged: (item) => setState(() => selectedItem = item),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(143, 124, 112, 1),
+                      border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.2)),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: DropdownButton(
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        color: Color(0xffffffff),
+                        fontFamily: "Montserrat",
+                        fontStyle: FontStyle.italic,
+                        // fontWeight: FontWeight.w600,
+                        letterSpacing: 1.0,
                       ),
-                  ],
+                      dropdownColor: Color.fromRGBO(143, 124, 112, 1),
+                      elevation: 2,
+                      underline: SizedBox(),
+                      items: items
+                          .map((item) =>
+                              DropdownMenuItem(value: item, child: Text(item)))
+                          .toList(),
+                      value: selectedItem,
+                      onChanged: (item) => setState(() => selectedItem = item),
+                    ),
+                  ),
+                  // SizedBox( height: 10.0),
+                  // TextField(
+                  //   obscureText: true,
+                  //   decoration: InputDecoration(
+                  //     border: OutlineInputBorder(),
+                  //     labelText: 'Password',
+                  //   ),
+                  // )
+                ],
               ),
             ],
           ),
         ),
       ),
-
     );
   }
 }
+
 @protected
 void setState(VoidCallback fn) {
   fn();
 }
-
