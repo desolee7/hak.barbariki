@@ -11,7 +11,6 @@ class MyApp extends StatelessWidget {
   List<String> items = ['One', 'Two', 'Three', 'Four'];
   String? selectedItem = 'One';
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,8 +39,8 @@ class MyApp extends StatelessWidget {
                   fit: BoxFit.cover)),
           padding: EdgeInsets.only(top: 100.0),
           margin: const EdgeInsets.symmetric(
-            horizontal: 20.0,
-          ),
+              // horizontal: 20.0,
+              ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -90,7 +89,39 @@ class MyApp extends StatelessWidget {
                         fontFamily: "Montserrat",
                       ),
                     ),
-                  )
+                  ),
+                  // Spacer(flex: 1),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          border: Border(
+                              top: BorderSide(),
+                              left: BorderSide(),
+                              right: BorderSide(),
+                              bottom: BorderSide()),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          border: Border(
+                              top: BorderSide(),
+                              left: BorderSide(),
+                              right: BorderSide(),
+                              bottom: BorderSide()),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
               Column(
