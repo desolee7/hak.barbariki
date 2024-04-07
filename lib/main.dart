@@ -2,7 +2,9 @@
 // тут была Аня
 import 'dart:js_interop';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,8 +12,8 @@ void main() {
 
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class MyApp extends StatelessWidget {
-  List<String> items = ['One', 'Two'];
-  String? selectedItem = 'One';
+  List<String> items = ['Скульптура', 'Живопись'];
+  String? selectedItem = 'Скульптура';
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +46,13 @@ class MyApp extends StatelessWidget {
               ),
           child:
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Загрузить",
+                    "Загрузить   ",
                     style: TextStyle(
                         fontSize: 68.0,
                         fontWeight: FontWeight.bold,
@@ -76,6 +78,7 @@ class MyApp extends StatelessWidget {
                         )),
                     ],
                   ),
+                  SizedBox(height: 10,),
                   ElevatedButton.icon(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
@@ -93,33 +96,28 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                   // Spacer(flex: 1),
-
+                  SizedBox(height: 50,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         padding: EdgeInsets.all(10.0),
-                        width: 100.0,
-                        height: 100.0,
+                        width: 160.0,
+                        height: 125.0,
                         decoration: BoxDecoration(
-                          border: Border(
-                              top: BorderSide(),
-                              left: BorderSide(),
-                              right: BorderSide(),
-                              bottom: BorderSide()),
+                          border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                          color: Color.fromRGBO(0, 0, 0, 0.50),
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                       ),
+                      SizedBox(width: 50,),
                       Container(
                         padding: EdgeInsets.all(10.0),
-                        width: 100.0,
-                        height: 100.0,
+                        width: 160.0,
+                        height: 125.0,
                         decoration: BoxDecoration(
-                          border: Border(
-                              top: BorderSide(),
-                              left: BorderSide(),
-                              right: BorderSide(),
-                              bottom: BorderSide()),
+                          border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                          color: Color.fromRGBO(0, 0, 0, 0.50),
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                       ),
@@ -127,17 +125,20 @@ class MyApp extends StatelessWidget {
                   ),
                 ],
               ),
+          Flexible(child:
           Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(width: 10, height: 40),
                   Container(
                   decoration: BoxDecoration(
                   color: Color.fromRGBO(143, 124, 112, 1),
                   border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: DropdownButton(
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 28.0,
                     color: Color(0xffffffff),
                     fontFamily: "Montserrat",
                     // fontWeight: FontWeight.w600,
@@ -151,10 +152,29 @@ class MyApp extends StatelessWidget {
                   value: selectedItem,
                   onChanged: (item) => setState(() => selectedItem = item),
                 ),),
+                SizedBox(width: 350, height: 28),
+                SizedBox(width: 350, height: 300,
+                    child: TextField(
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontFamily: "Montserrat"),
+                        decoration: InputDecoration(
+                            hintText: "Начните вводить описание...",
+                            hintStyle: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white70,
+                              fontFamily: "Montserrat",
+                            ),
+                            contentPadding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
+                            fillColor: Color.fromRGBO(0, 0, 0, 0.50),
+                            filled: true,
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0))
+                            ))),
                 ],
-              ),
+              ),),
             ]
-          ),
+         ),
         ),
       ),
     );
