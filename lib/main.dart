@@ -1,10 +1,20 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_import, unnecessary_import
 // тут была Аня
+import 'package:flutter/material.dart';
+
 import 'dart:js_interop';
 
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
+import 'dart:developer';
+import 'package:logger/logger.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,6 +24,59 @@ void main() {
 class MyApp extends StatelessWidget {
   List<String> items = ['Скульптура', 'Живопись'];
   String? selectedItem = 'Скульптура';
+
+  File? _pickedImage;
+  Uint8List webImage = Uint8List(8);
+
+  final Logger logger = Logger(); //логи не работают яхз пофиг)))
+
+  Future<void> _pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+
+        _sendImageToServer(selected);
+      } else {
+        logger.d('Изображение не выбрано');
+      }
+    } else if (kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = File('a');
+        });
+        _sendImageToServer(_pickedImage!);
+      } else {
+        logger.d("Изображение не выбрано");
+      }
+    } else {
+      logger.d("Что-то не так");
+    }
+  }
+
+  Future<void> _sendImageToServer(File imageFile) async {
+    var url = Uri.parse('ссылка на сервер'); //вот сюда ссылку на наш сервер
+    var request = http.MultipartRequest('POST', url);
+    request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      log('Изображение успешно загружено');
+    } else {
+      log('Не удалось загрузить изображение. Ошибка: ${response.reasonPhrase}');
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,137 +107,162 @@ class MyApp extends StatelessWidget {
           margin: const EdgeInsets.symmetric(
               // horizontal: 20.0,
               ),
-          child:
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Загрузить   ",
-                    style: TextStyle(
-                        fontSize: 68.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(0, 0, 0, 0.50),
-                        fontFamily: "Montserrat"),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "фото",
-                        style: TextStyle(
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(0, 0, 0, 0.80),
-                          fontFamily: "Montserrat",
-                        ),
-                      ),
-                      SizedBox(width: 15),
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.download, color: Colors.white70,),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(143, 124, 112, 1),
-                          shadowColor: Color(0xff000000)
-                        )),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(143, 124, 112, 1),
-                      shadowColor: Color(0xff000000),
-                    ),
-                    icon: const Icon(Icons.search_sharp, color: Colors.white70,),
-                    label: Text(
-                      "Поиск предметов",
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Загрузить   ",
+                  style: TextStyle(
+                      fontSize: 68.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(0, 0, 0, 0.50),
+                      fontFamily: "Montserrat"),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "фото",
                       style: TextStyle(
-                        fontSize: 32.0,
-                        color: Color(0xffffffff),
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(0, 0, 0, 0.80),
                         fontFamily: "Montserrat",
                       ),
                     ),
-                  ),
-                  // Spacer(flex: 1),
-                  SizedBox(height: 50,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(10.0),
-                        width: 160.0,
-                        height: 125.0,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
-                          color: Color.fromRGBO(0, 0, 0, 0.50),
-                          borderRadius: BorderRadius.circular(16.0),
+                    SizedBox(width: 15),
+                    IconButton(
+                        onPressed: () {
+                          //загрузка фото
+                          _pickImage();
+                        },
+                        icon: const Icon(
+                          Icons.download,
+                          color: Colors.white70,
                         ),
-                      ),
-                      SizedBox(width: 50,),
-                      Container(
-                        padding: EdgeInsets.all(10.0),
-                        width: 160.0,
-                        height: 125.0,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
-                          color: Color.fromRGBO(0, 0, 0, 0.50),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                      ),
-                    ],
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(143, 124, 112, 1),
+                            shadowColor: Color(0xff000000))),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(143, 124, 112, 1),
+                    shadowColor: Color(0xff000000),
                   ),
+                  icon: const Icon(
+                    Icons.search_sharp,
+                    color: Colors.white70,
+                  ),
+                  label: Text(
+                    "Поиск предметов",
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      color: Color(0xffffffff),
+                      fontFamily: "Montserrat",
+                    ),
+                  ),
+                ),
+                // Spacer(flex: 1),
+                SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10.0),
+                      width: 160.0,
+                      height: 125.0,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                        color: Color.fromRGBO(0, 0, 0, 0.50),
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 50,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10.0),
+                      width: 160.0,
+                      height: 125.0,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                        color: Color.fromRGBO(0, 0, 0, 0.50),
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 10, height: 40),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(143, 124, 112, 1),
+                      border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.2)),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: DropdownButton(
+                      style: TextStyle(
+                        fontSize: 28.0,
+                        color: Color(0xffffffff),
+                        fontFamily: "Montserrat",
+                        // fontWeight: FontWeight.w600,
+                        letterSpacing: 1.0,
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white70,
+                      ),
+                      dropdownColor: Color.fromRGBO(143, 124, 112, 1),
+                      elevation: 2,
+                      underline: SizedBox(),
+                      items: items
+                          .map((item) =>
+                              DropdownMenuItem(value: item, child: Text(item)))
+                          .toList(),
+                      value: selectedItem,
+                      onChanged: (item) => setState(() => selectedItem = item),
+                    ),
+                  ),
+                  SizedBox(width: 350, height: 28),
+                  SizedBox(
+                      width: 350,
+                      height: 300,
+                      child: TextField(
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                              fontFamily: "Montserrat"),
+                          decoration: InputDecoration(
+                              hintText: "Начните вводить описание...",
+                              hintStyle: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white70,
+                                fontFamily: "Montserrat",
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 30.0, horizontal: 10.0),
+                              fillColor: Color.fromRGBO(0, 0, 0, 0.50),
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))))),
                 ],
               ),
-          Flexible(child:
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(width: 10, height: 40),
-                  Container(
-                  decoration: BoxDecoration(
-                  color: Color.fromRGBO(143, 124, 112, 1),
-                  border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: DropdownButton(
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    color: Color(0xffffffff),
-                    fontFamily: "Montserrat",
-                    // fontWeight: FontWeight.w600,
-                    letterSpacing: 1.0,
-                  ),
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.white70,),
-                  dropdownColor: Color.fromRGBO(143, 124, 112, 1),
-                  elevation: 2,
-                  underline: SizedBox(),
-                  items: items.map((item) => DropdownMenuItem(value: item, child: Text(item))).toList(),
-                  value: selectedItem,
-                  onChanged: (item) => setState(() => selectedItem = item),
-                ),),
-                SizedBox(width: 350, height: 28),
-                SizedBox(width: 350, height: 300,
-                    child: TextField(
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.white,
-                            fontFamily: "Montserrat"),
-                        decoration: InputDecoration(
-                            hintText: "Начните вводить описание...",
-                            hintStyle: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white70,
-                              fontFamily: "Montserrat",
-                            ),
-                            contentPadding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
-                            fillColor: Color.fromRGBO(0, 0, 0, 0.50),
-                            filled: true,
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0))
-                            ))),
-                ],
-              ),),
-            ]
-         ),
+            ),
+          ]),
         ),
       ),
     );
