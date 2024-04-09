@@ -17,13 +17,17 @@ import 'dart:developer';
 import 'package:logger/logger.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Widget1());
 }
-
+class Widget1 extends StatefulWidget {
+  const Widget1({Key? key}) : super(key: key);
+  @override
+  State<Widget1> createState() => MyApp();
+}
 // ignore: use_key_in_widget_constructors, must_be_immutable
-class MyApp extends StatelessWidget {
+class MyApp extends State<Widget1> {
   List<String> items = ['Скульптура', 'Живопись'];
-  String? selectedItem = 'Скульптура';
+  String selectedItem = 'Скульптура';
 
   File? _pickedImage;
   Uint8List webImage = Uint8List(8);
@@ -214,7 +218,7 @@ class MyApp extends StatelessWidget {
                       border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.2)),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: DropdownButton(
+                    child: DropdownButton<String>(
                       style: TextStyle(
                         fontSize: 28.0,
                         color: Color(0xffffffff),
@@ -229,12 +233,9 @@ class MyApp extends StatelessWidget {
                       dropdownColor: Color.fromRGBO(143, 124, 112, 1),
                       elevation: 2,
                       underline: SizedBox(),
-                      items: items
-                          .map((item) =>
-                              DropdownMenuItem(value: item, child: Text(item)))
-                          .toList(),
+                      items: items.map((item) => DropdownMenuItem<String>(value: item, child: Text(item))).toList(),
                       value: selectedItem,
-                      onChanged: (item) => setState(() => selectedItem = item),
+                      onChanged: (String? newValue) {setState(() {selectedItem = newValue!;}); },
                     ),
                   ),
                   SizedBox(width: 350, height: 28),
@@ -269,7 +270,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-@protected
-void setState(VoidCallback fn) {
-  fn();
-}
