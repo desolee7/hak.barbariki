@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unused_import, unnecessary_import
 // тут была Аня
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'dart:js_interop';
@@ -26,9 +28,9 @@ class Widget1 extends StatefulWidget {
 }
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class MyApp extends State<Widget1> {
-  List<String> items = ['Скульптура', 'Живопись'];
-  String selectedItem = 'Скульптура';
-
+  List<String> items = [' Скульптура', ' Живопись'];
+  String selectedItem = ' Скульптура';
+  String textFieldValue = '';
   File? _pickedImage;
   Uint8List webImage = Uint8List(8);
 
@@ -79,7 +81,32 @@ class MyApp extends State<Widget1> {
       log('Не удалось загрузить изображение. Ошибка: ${response.reasonPhrase}');
     }
   }
+  Future<void> _makeJSON() async{
+    Map<String, dynamic> data = {
+      'image': _pickedImage,
+      'text': textFieldValue,
+      'category': selectedItem,
+    };
+    if (_pickedImage != null && textFieldValue != ''){
+      String jsonData = json.encode(data);
+      final file = File('data.json');
+      await file.writeAsString(jsonData);
+      _sendJSONToServer(file);
+    }
+  }
+  Future<void> _sendJSONToServer(File json) async {
+    var url = Uri.parse('ссылка на сервер'); //вот сюда ссылку на наш сервер
+    var request = http.MultipartRequest('POST', url);
+    request.files.add(await http.MultipartFile.fromPath('json', json.path));
 
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      log('JSON успешно отправлен');
+    } else {
+      log('Не удалось отправить JSON. Ошибка: ${response.reasonPhrase}');
+    }
+  }
 
 
   @override
@@ -153,7 +180,7 @@ class MyApp extends State<Widget1> {
                   height: 10,
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed:(){_makeJSON(); },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromRGBO(143, 124, 112, 1),
                     shadowColor: Color(0xff000000),
@@ -247,6 +274,10 @@ class MyApp extends State<Widget1> {
                               fontSize: 20.0,
                               color: Colors.white,
                               fontFamily: "Montserrat"),
+                          onChanged: (text) {
+                              setState(() {
+                              textFieldValue = text;
+                              });},
                           decoration: InputDecoration(
                               hintText: "Начните вводить описание...",
                               hintStyle: TextStyle(
