@@ -120,6 +120,7 @@ class MyApp extends State<Widget1> {
             alignment: Alignment.bottomLeft,
             width: 100.0,
             height: 100.0,
+            color: Colors.white,
             child: Container(
               width: 200.0,
               height: 50.0,
@@ -129,173 +130,342 @@ class MyApp extends State<Widget1> {
             ),
           ),
         ),
-        body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('lib/img/background.png'),
-                  fit: BoxFit.cover)),
-          padding: EdgeInsets.only(top: 100.0),
-          margin: const EdgeInsets.symmetric(
-              // horizontal: 20.0,
-              ),
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Загрузить   ",
-                  style: TextStyle(
-                      fontSize: 68.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(0, 0, 0, 0.50),
-                      fontFamily: "Montserrat"),
+        body:
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('lib/img/background.png'),
+                      fit: BoxFit.cover)),
+                margin: const EdgeInsets.symmetric(
+                  // horizontal: 20.0,
                 ),
-                Row(
+              child: ListView(
+                  scrollDirection: Axis.vertical,
                   children: [
-                    Text(
-                      "фото",
-                      style: TextStyle(
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(0, 0, 0, 0.80),
-                        fontFamily: "Montserrat",
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    IconButton(
-                        onPressed: () {
-                          //загрузка фото
-                          _pickImage();
-                        },
-                        icon: const Icon(
-                          Icons.download,
-                          color: Colors.white70,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromRGBO(143, 124, 112, 1),
-                            shadowColor: Color(0xff000000))),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton.icon(
-                  onPressed:(){_makeJSON(); },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(143, 124, 112, 1),
-                    shadowColor: Color(0xff000000),
-                  ),
-                  icon: const Icon(
-                    Icons.search_sharp,
-                    color: Colors.white70,
-                  ),
-                  label: Text(
-                    "Поиск предметов",
-                    style: TextStyle(
-                      fontSize: 32.0,
-                      color: Color(0xffffffff),
-                      fontFamily: "Montserrat",
-                    ),
-                  ),
-                ),
-                // Spacer(flex: 1),
-                SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      width: 160.0,
-                      height: 125.0,
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
-                        color: Color.fromRGBO(0, 0, 0, 0.50),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 50,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      width: 160.0,
-                      height: 125.0,
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
-                        color: Color.fromRGBO(0, 0, 0, 0.50),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: 10, height: 40),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(143, 124, 112, 1),
-                      border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.2)),
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: DropdownButton<String>(
-                      style: TextStyle(
-                        fontSize: 28.0,
-                        color: Color(0xffffffff),
-                        fontFamily: "Montserrat",
-                        // fontWeight: FontWeight.w600,
-                        letterSpacing: 1.0,
-                      ),
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.white70,
-                      ),
-                      dropdownColor: Color.fromRGBO(143, 124, 112, 1),
-                      elevation: 2,
-                      underline: SizedBox(),
-                      items: items.map((item) => DropdownMenuItem<String>(value: item, child: Text(item))).toList(),
-                      value: selectedItem,
-                      onChanged: (String? newValue) {setState(() {selectedItem = newValue!;}); },
-                    ),
-                  ),
-                  SizedBox(width: 350, height: 28),
-                  SizedBox(
-                      width: 350,
-                      height: 300,
-                      child: TextField(
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white,
-                              fontFamily: "Montserrat"),
-                          onChanged: (text) {
-                              setState(() {
-                              textFieldValue = text;
-                              });},
-                          decoration: InputDecoration(
-                              hintText: "Начните вводить описание...",
-                              hintStyle: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.white70,
+                    SizedBox(height: 150,),
+                    Row( mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Загрузить   ",
+                            style: TextStyle(
+                                fontSize: 68.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                fontFamily: "Montserrat"),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "фото",
+                                style: TextStyle(
+                                  fontSize: 40.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(0, 0, 0, 0.80),
+                                  fontFamily: "Montserrat",
+                                ),
+                              ),
+                              SizedBox(width: 15),
+                              IconButton(
+                                  onPressed: () {
+                                    //загрузка фото
+                                    _pickImage();
+                                  },
+                                  icon: const Icon(
+                                    Icons.download,
+                                    color: Colors.white70,
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color.fromRGBO(143, 124, 112, 1),
+                                      shadowColor: Color(0xff000000))),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          ElevatedButton.icon(
+                            onPressed:(){_makeJSON(); },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromRGBO(143, 124, 112, 1),
+                              shadowColor: Color(0xff000000),
+                            ),
+                            icon: const Icon(
+                              Icons.search_sharp,
+                              color: Colors.white70,
+                            ),
+                            label: Text(
+                              "Поиск предметов",
+                              style: TextStyle(
+                                fontSize: 32.0,
+                                color: Color(0xffffffff),
                                 fontFamily: "Montserrat",
                               ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 30.0, horizontal: 10.0),
-                              fillColor: Color.fromRGBO(0, 0, 0, 0.50),
-                              filled: true,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30.0))))),
-                ],
-              ),
-            ),
-          ]),
-        ),
+                            ),
+                          ),
+                          // Spacer(flex: 1),
+
+                        ],
+                      ),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox( height: 35),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(143, 124, 112, 1),
+                                border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.2)),
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              child: DropdownButton<String>(
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  color: Color(0xffffffff),
+                                  fontFamily: "Montserrat",
+                                  // fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.0,
+                                ),
+                                icon: const Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.white70,
+                                ),
+                                dropdownColor: Color.fromRGBO(143, 124, 112, 1),
+                                elevation: 2,
+                                underline: SizedBox(),
+                                items: items.map((item) => DropdownMenuItem<String>(value: item, child: Text(item))).toList(),
+                                value: selectedItem,
+                                onChanged: (String? newValue) {setState(() {selectedItem = newValue!;}); },
+                              ),
+                            ),
+                            SizedBox(width: 130, height: 60, child:
+                            Container(
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage('lib/img/cat.png'),
+                                        fit: BoxFit.cover)),
+                              ),
+                            ),
+
+                            SizedBox(
+                                width: 350,
+                                height: 300,
+                                child: TextField(
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        color: Colors.white,
+                                        fontFamily: "Montserrat"),
+                                    onChanged: (text) {
+                                      setState(() {
+                                        textFieldValue = text;
+                                      });},
+                                    decoration: InputDecoration(
+                                        hintText: "Начните вводить описание...",
+                                        hintStyle: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.white70,
+                                          fontFamily: "Montserrat",
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 30.0, horizontal: 10.0),
+                                        fillColor: Color.fromRGBO(0, 0, 0, 0.50),
+                                        filled: true,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(30.0))))),
+                          ],
+                        ),
+                      ),
+                    ]),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox( height: 50,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox( height: 50,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              width: 160.0,
+                              height: 125.0,
+                              decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Color.fromRGBO(0, 0, 0, 0.50)),
+                                color: Color.fromRGBO(0, 0, 0, 0.50),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 50,)
+                      ],
+                    )
+          ]
+        )
+      ),
       ),
     );
   }
