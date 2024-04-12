@@ -127,8 +127,6 @@ class MyApp extends State<Widget1> {
     });
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -237,63 +235,46 @@ class MyApp extends State<Widget1> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 35),
+                          SizedBox(height: 20),
                           Container(
+                            height: 50,
+                            width: 250,
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(143, 124, 112, 1),
                               border: Border.all(
-                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
-                              borderRadius: BorderRadius.circular(30.0),
+                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
+                              borderRadius: BorderRadius.circular(16.0),
                             ),
-
-                            child: DropdownButton<String>(
-                              //КАТЕГОРИИ
-                              style: TextStyle(
-                                fontSize: 30.0,
-                                color: Color(0xffffffff),
-                                fontFamily: "Montserrat",
-                                // fontWeight: FontWeight.w600,
-                                letterSpacing: 1.0,
-                              ),
-                              icon: const Icon(
-                                Icons.arrow_drop_down,
-                                color: Colors.white70,
-                              ),
-                              dropdownColor: Color.fromRGBO(143, 124, 112, 1),
-                              elevation: 2,
-                              underline: SizedBox(),
-                              items: items
-                                  .map((item) => DropdownMenuItem<String>(
-                                      value: item, child: Text(item)))
-                                  .toList(),
-                              value: selectedItem,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedItem = newValue!;
-                                });
-                              },
-                            ),
-
-                            // child: DropdownButton<String>(         //КАТЕГОРИИ
-                            //   style: TextStyle(
-                            //     fontSize: 30.0,
-                            //     color: Color(0xffffffff),
-                            //     fontFamily: "Montserrat",
-                            //     // fontWeight: FontWeight.w600,
-                            //     letterSpacing: 1.0,
-                            //   ),
-                            //   icon: const Icon(
-                            //     Icons.arrow_drop_down,
-                            //     color: Colors.white70,
-                            //   ),
-                            //   dropdownColor: Color.fromRGBO(143, 124, 112, 1),
-                            //   elevation: 2,
-                            //   underline: SizedBox(),
-                            //   items: items.map((item) => DropdownMenuItem<String>(value: item, child: Text(item))).toList(),
-                            //   value: selectedItem,
-                            //   onChanged: (String? newValue) {setState(() {selectedItem = newValue!;}); },
-                            // ),
                           ),
+                          Text(
+                            serverText,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                              fontFamily: "Montserrat",
+                            ),
+                          ),
+
+                          // child: DropdownButton<String>(         //КАТЕГОРИИ
+                          //   style: TextStyle(
+                          //     fontSize: 30.0,
+                          //     color: Color(0xffffffff),
+                          //     fontFamily: "Montserrat",
+                          //     // fontWeight: FontWeight.w600,
+                          //     letterSpacing: 1.0,
+                          //   ),
+                          //   icon: const Icon(
+                          //     Icons.arrow_drop_down,
+                          //     color: Colors.white70,
+                          //   ),
+                          //   dropdownColor: Color.fromRGBO(143, 124, 112, 1),
+                          //   elevation: 2,
+                          //   underline: SizedBox(),
+                          //   items: items.map((item) => DropdownMenuItem<String>(value: item, child: Text(item))).toList(),
+                          //   value: selectedItem,
+                          //   onChanged: (String? newValue) {setState(() {selectedItem = newValue!;}); },
+                          // ),
+
                           SizedBox(
                             width: 130,
                             height: 60,
@@ -394,7 +375,9 @@ class MyApp extends State<Widget1> {
                       },
                     ),
                   ),
-                  SizedBox(height: 20,)
+                  SizedBox(
+                    height: 20,
+                  )
                 ],
               )
 
